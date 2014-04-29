@@ -12,7 +12,7 @@ def readFile(filename = "datos.txt"):
 			for row in reader:
 				for val in row:
 					datos[x][y] = float(val)
-					print("{:10}".format(val), end=" ")
+					print("{:5}".format(val), end=" ")
 					y += 1
 				print("")
 				x += 1
