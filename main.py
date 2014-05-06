@@ -13,7 +13,7 @@ def leerArchivo(filename = "datos.txt"):
 			print("{:5} {:5}".format("X","Y"))
 			for row in reader:
 				for val in row:
-					datos[x][y] = float(val)
+					datos[x][y] = Fraction(val)
 					print("{:5}".format(val), end=" ")
 					y += 1
 				print("")
@@ -79,21 +79,15 @@ def calculaEcuaciones(sumatoriasX, sumatoriasXY, n, orden = 3):
 def printEcuacion(valores):
 	ec = "\nEcuacion:\n"
 	for x in range(len(valores)):
-		if int(valores[x]) != 0 and x == 1:
-			ec += " + "
-			if int(valores[x]) == 1:
-				ec += "X"
-			else:
-				ec += str(valores[x]) + "X"
-
-		elif int(valores[x]) != 0 and x != 0:
-			ec += " + "
-			if int(valores[x]) == 1:
-				ec += "X^" + str(x)
-			else:
-				ec += str(valores[x]) + "X^" + str(x)
-		elif x == 0:
-			ec += str(valores[x])
+		if x == 0:
+			if valores[x] != 0:
+				ec += str(valores[x]) + " + "
+		elif x == 1:
+			if valores[x] != 0:
+				ec += " + " + str(valores[x]) + "X"
+		else:
+			if valores[x] != 0:
+				ec += " + " + str(valores[x]) + "X^" + str(x)
 	print(ec)
 
 '''
@@ -156,8 +150,6 @@ def createPivot(matrix, i):
 
 
 def printMatrix(matrix, msg="Matrix:"):
-	pass
-	'''
 	print("\n" + msg + "\n")
 	rowLen = len(matrix[0])
 	for row in matrix:
@@ -165,7 +157,6 @@ def printMatrix(matrix, msg="Matrix:"):
 			print("{:6}".format(row[x]), end=" ")
 		print()
 	print("\n" + "======="*rowLen)
-	'''
 
 
 '''
