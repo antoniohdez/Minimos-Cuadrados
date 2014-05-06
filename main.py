@@ -79,7 +79,14 @@ def calculaEcuaciones(sumatoriasX, sumatoriasXY, n, orden = 3):
 def printEcuacion(valores):
 	ec = "\nEcuacion:\n"
 	for x in range(len(valores)):
-		if int(valores[x]) != 0 and x != 0:
+		if int(valores[x]) != 0 and x == 1:
+			ec += " + "
+			if int(valores[x]) == 1:
+				ec += "X"
+			else:
+				ec += str(valores[x]) + "X"
+
+		elif int(valores[x]) != 0 and x != 0:
 			ec += " + "
 			if int(valores[x]) == 1:
 				ec += "X^" + str(x)
@@ -177,18 +184,26 @@ while (option != "x"):
 	if(option == "A" or option == "a"):
 		datos = leerArchivo()
 		orden = calculaOrden(datos)
+		print("\nEl orden utilizado es: ", orden)
 		sumatoriasX, sumatoriasXY = calculaSumatorias(datos, orden)
 		ecuaciones = calculaEcuaciones(sumatoriasX, sumatoriasXY, len(datos), orden)
 		valores = gaussJordan(ecuaciones, orden+1)
 		printEcuacion(valores)
 		
 
-
 	if(option =="B" or option == "b"):
-		orden = int(input("Por favor indique el orden polinomial: "))
 		datos = leerArchivo()
-		sumatoriasX, sumatoriasXY = calculaSumatorias(datos, orden)
-		ecuaciones = calculaEcuaciones(sumatoriasX, sumatoriasXY, len(datos), orden)
-		valores = gaussJordan(ecuaciones, orden+1)
-		printEcuacion(valores)
+		orden = int(input("Por favor indique el orden polinomial: "))
+		ordenAuto = calculaOrden(datos)
+		if (orden <= ordenAuto):
+			sumatoriasX, sumatoriasXY = calculaSumatorias(datos, orden)
+			ecuaciones = calculaEcuaciones(sumatoriasX, sumatoriasXY, len(datos), orden)
+			valores = gaussJordan(ecuaciones, orden+1)
+			printEcuacion(valores)
+		else:
+			print("El orden seleccionado supera al limite posible, se ha utilizado el orden: ", ordenAuto)
+			sumatoriasX, sumatoriasXY = calculaSumatorias(datos, ordenAuto)
+			ecuaciones = calculaEcuaciones(sumatoriasX, sumatoriasXY, len(datos), ordenAuto)
+			valores = gaussJordan(ecuaciones, ordenAuto+1)
+			printEcuacion(valores)
 
